@@ -1,3 +1,5 @@
+import { IfStatements } from './IfStatements';
+
 export function Exercise() {
   const a = 5;
   const b = 2;
@@ -21,6 +23,22 @@ export function Exercise() {
   //   const result = a <= b;
   //   const result = a === b;
 
+  //   IF --------------------- //
+  const parseINT = parseInt('5');
+  // nie zadziała dla: null, undefined...
+  // isNaN - sprawdza, czy podana wartość jest liczbą
+  // Math.round - zaokrągla liczbe, ktora ma przecinek - nawet w przypadku stringa
+  // Math.ceil - zaokrągla zawsze do wyzszej liczby
+  // Math.floor - zaokrągla zawsze do nizszej liczby
+  // Math.sqrt - słuzy do pierwiastkowania
+  // Math.pow - do potęgowania
+  // Math.max - szuka ze zbioru liczb największej liczby
+  // Math.min - najmniejszej
+  // Math.random - zwraca randomową liczbę
+
+  Number.isInteger(10);
+  console.log(parseINT);
+
   return (
     <>
       <div> addResult: {addResult}</div>
@@ -29,6 +47,7 @@ export function Exercise() {
       <div> divideResult: {divideResult}</div>
       <div> moduloResult: {moduloResult}</div>
       <div> powerResult: {powerResult}</div>
+      <IfStatements />
     </>
   );
 }
