@@ -1,4 +1,5 @@
 import { IfStatements } from './IfStatements';
+import { IfExercise } from './IfExercise';
 
 export function Exercise() {
   const a = 5;
@@ -48,6 +49,7 @@ export function Exercise() {
       <div> moduloResult: {moduloResult}</div>
       <div> powerResult: {powerResult}</div>
       <IfStatements />
+      <IfExercise />
     </>
   );
 }
