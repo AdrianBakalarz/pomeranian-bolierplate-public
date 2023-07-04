@@ -114,30 +114,30 @@
 
 // export default Czas;
 
-import { useState } from 'react';
-import { useEffect } from 'react';
+// import { useState } from 'react';
+// import { useEffect } from 'react';
 
-const Baner = () => {
-  const [text, setText] = useState('Programowanie jest fajne');
-  const [isWorking, setIsWorking] = useState(true);
+// const Baner = () => {
+//   const [text, setText] = useState('Programowanie jest fajne');
+//   const [isWorking, setIsWorking] = useState(true);
 
-  useEffect(() => {
-    let intervalId = null;
-    if (isWorking) {
-      intervalId = setInterval(() => {
-        const letter = text[text.length - 1];
-        setText(letter + text.substring(0, text.length - 1));
-      }, 200);
-    }
-    return () => clearInterval(intervalId);
-  }, [isWorking, text]);
+//   useEffect(() => {
+//     let intervalId = null;
+//     if (isWorking) {
+//       intervalId = setInterval(() => {
+//         const letter = text[text.length - 1];
+//         setText(letter + text.substring(0, text.length - 1));
+//       }, 200);
+//     }
+//     return () => clearInterval(intervalId);
+//   }, [isWorking, text]);
 
-  return (
-    <>
-      {isWorking && <button onClick={() => setIsWorking(false)}>Stop</button>}
-      {!isWorking && <button onClick={() => setIsWorking(true)}>Start</button>}
-      <div>{text}</div>
-    </>
-  );
-};
-export default Baner;
+//   return (
+//     <>
+//       {isWorking && <button onClick={() => setIsWorking(false)}>Stop</button>}
+//       {!isWorking && <button onClick={() => setIsWorking(true)}>Start</button>}
+//       <div>{text}</div>
+//     </>
+//   );
+// };
+// export default Baner;
