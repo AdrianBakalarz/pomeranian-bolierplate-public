@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import './style.css';
 import Mole from './Mole.png';
+import { useEffect } from 'react';
 
-export function HitTheMoleGame() {
-  const [moleArray, setMoleArray] = useState(
-    Array(10).fill({ isVisible: false, isWhacked: false })
-  );
-
+export const MoleGameSettings = () => {
   const defaultGameTime = 2 * 60 * 1000;
   const [gameTime, setGameTime] = useState(defaultGameTime); // 2000 * 60
   const [moleCount, setMoleCount] = useState(1);
+  const [seconds, setSeconds] = useState(gameTime / 1000);
+  const [isCountingDown, setIsCountingDown] = useState(false);
   const gameTimeOption = [
     { label: '1 minuta', timeValue: 1 * 60 * 1000 },
     { label: '2 minuty', timeValue: 2 * 60 * 1000 },
@@ -20,6 +19,89 @@ export function HitTheMoleGame() {
     { label: '2 krety' },
     { label: '3 krety' },
   ];
+  const startTimer = () => {
+    setSeconds(seconds - 1);
+    setIsCountingDown((current) => !current);
+  };
+  useEffect(() => {
+    setSeconds(defaultGameTime / 1000);
+  }, [gameTime]);
+
+  useEffect(() => {
+    let intervalId;
+    if (setIsCountingDown) {
+      intervalId = setInterval(() => {
+        setSeconds(seconds - 1);
+      }, 1000);
+    }
+    console.log(seconds.toString().padStart(2, 0));
+    return () => clearInterval(intervalId);
+  }, [seconds]);
+
+  return (
+    <>
+      <div className="moleGameOptions">
+        <p>
+          Gra polegająca na podążaniu za krecikiem i trafieniu na kwadrat, w
+          którym się pojawił.
+        </p>
+
+        <div className="gameOptionsButtons">
+          <div className="gameButtonsRows">
+            <div>
+              <h4>CZAS GRY</h4>
+              {gameTimeOption.map(({ label, timeValue }) => (
+                <button
+                  className={gameTime === timeValue ? 'activeButton' : ''}
+                  onClick={() => setGameTime(timeValue)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div>
+              <h4>LICZBA KRETÓW</h4>
+              {moleCountOption.map(({ label }) => (
+                <button
+                  className={
+                    moleCount === Number(label[0]) ? 'activeButton' : ''
+                  }
+                  onClick={() => setMoleCount(Number(label[0]))}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <div>
+              <h4>PRZYCISKI STERUJĄCE</h4>
+              <button>START</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+export const MoleGameBoard = (props) => {
+  return (
+    <div className="moleGame">
+      {props.moleArray.map((mole, index) => {
+        <div>
+          <span>
+            {mole.isVisible ? (
+              <img src={Mole} onClick={() => props.hitTheMole(index)} />
+            ) : null}
+          </span>
+        </div>;
+      })}
+    </div>
+  );
+};
+
+export function HitTheMoleGame() {
+  const [moleArray, setMoleArray] = useState(
+    Array(10).fill({ isVisible: false, isWhacked: false })
+  );
 
   function hitTheMole(index) {
     console.log(moleArray[index].isWhacked);
@@ -28,32 +110,10 @@ export function HitTheMoleGame() {
     moleArray[index].isWhacked = !moleArray[index].isWhacked;
     console.log(moleArray[index].isWhacked);
   }
-
   return (
-    <div>
-      <p>Liczba kretów: {moleCount}</p>
-      {moleCountOption.map(({ label }) => (
-        <button onClick={() => setMoleCount(Number(label[0]))}>{label}</button>
-      ))}
-
-      <p>
-        Czas gry: {gameTime / 60 / 1000}
-        {gameTime > 1 * 60 * 1000 ? ' minuty' : ' minuta'}
-      </p>
-      {gameTimeOption.map(({ label, timeValue }) => (
-        <button onClick={() => setGameTime(timeValue)}>{label}</button>
-      ))}
-      {moleArray.map((mole, index) => {
-        return (
-          <div>
-            <span>
-              {mole.isVisible ? (
-                <img src={Mole} onClick={() => hitTheMole(index)} />
-              ) : null}
-            </span>
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <MoleGameSettings />
+      <MoleGameBoard moleArray={moleArray} hitTheMole={hitTheMole} />
+    </>
   );
 }
