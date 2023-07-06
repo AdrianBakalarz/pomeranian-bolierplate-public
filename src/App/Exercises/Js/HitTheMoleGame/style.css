@@ -13,14 +13,12 @@
 .gameButtonsRows {
   grid-area: 1 / 1 / 5 / 5;
 }
-
 .gameButtonsRows div {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
-
 .gameButtonsRows h4,
 .gameButtonsRows button {
   width: 15rem;
@@ -34,7 +32,6 @@
   border: 1px;
   gap: 1rem;
   background: #23213d;
-
   font-family: Poppins;
   font-size: 18px;
   font-weight: 500;
@@ -44,11 +41,19 @@
   color: white;
 }
 
-.gameButtonsRows button:hover,
+.gameButtonsRows button:hover {
+  background: #fe375868;
+  border-color: #fe375868;
+}
+
 .gameButtonsRows button:active {
   background: #fe3756;
   border-color: #fe3756;
 }
 .gameButtonsRows button.activeButton {
   background: #fe3756;
+}
+.moleGame {
+  display: flex;
+  justify-content: center;
 }
