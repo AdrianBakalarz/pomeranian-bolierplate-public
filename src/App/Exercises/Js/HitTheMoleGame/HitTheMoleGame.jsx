@@ -1,63 +1,70 @@
 import React, { useState, useEffect } from 'react';
 
-import './style.css';
-import MoleGameSettings from './MoleGameSettings';
-import MoleGameBoard from './MoleGameBoard';
+import MoleGameSettings from './MoleGameSettings.jsx';
 
-export function HitTheMoleGame() {
+import './style.css';
+
+import MoleGameBoard from './MoleGameBoard.jsx';
+
+export const HitTheMoleGame = () => {
   const defaultGameTime = 2 * 60 * 1000;
-  const [gameTime, setGameTime] = useState(defaultGameTime / 1000);
-  // const [seconds, setSeconds] = useState(gameTime / 1000);
+  const moleSpeed = 1000;
   const [moleCount, setMoleCount] = useState(1);
+  const [gameTime, setGameTime] = useState(defaultGameTime / 1000);
+  const [seconds, setSeconds] = useState(gameTime / 1000);
   const [scoreCount, setScoreCount] = useState(0);
   const [moleArray, setMoleArray] = useState(
-    Array(10).fill({ isVisible: true, isWhacked: false })
+    Array(10).fill({ isVisible: false, isWhacked: false })
   );
 
-  const CountdownTimer = ({ initialCountdownState }) => {
-    const [countdown, setCountdown] = useState(initialCountdownState);
-    useEffect(() => {
-      if (!countdown) return;
-      const interval = setInterval(() => {
-        setCountdown((prevCountdown) => prevCountdown - 1000);
+  useEffect(() => {
+    let intervalId;
+    if (!intervalId) {
+      intervalId = setInterval(() => {
+        setSeconds(seconds - 1);
       }, 1000);
+      return () => clearInterval(intervalId);
+    }
+  }, [gameTime]);
 
-      return () => {
-        clearInterval(interval);
-      };
-    }, [countdown]);
-    return (
-      <div>
-        <p>time remaining: {countdown / 1000} seconds</p>
-      </div>
-    );
-  };
+  useEffect(() => {
+    let intervalId;
+    if (!intervalId) {
+      intervalId = setInterval(() => {
+        showRandomMole();
+      }, moleSpeed);
+      return () => clearInterval(intervalId);
+    }
+  }, [gameTime]);
 
   function hitTheMole(index) {
-    console.log(moleArray[index].isWhacked);
-    if (!moleArray[index].isVisible) return;
-    moleArray[index].isWhacked = !moleArray[index].isWhacked;
-    console.log(moleArray[index].isWhacked);
+    if (moleArray[index].isVisible) {
+      setScoreCount(scoreCount + 1);
+
+      setMoleArray((prevVal) => {
+        const newArray = [...prevVal];
+        newArray[index].isVisible = false;
+        return newArray;
+      });
+    }
   }
 
   function showRandomMole() {
-    function getRandomIntInclusive(min, max) {
+    function getRandom(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
       return Math.floor(Math.random() * (max - min + 1) + min);
     }
-    const random = getRandomIntInclusive(0, moleArray.length - 1);
-    console.log(random);
+
+    const random = getRandom(0, moleArray.length - 1);
 
     setMoleArray((previousMoleArray) =>
       previousMoleArray.map((mole, index) => {
-        const updatedMole = { ...mole };
-        updatedMole.isVisible = index === random;
-        console.log(updatedMole);
-        return updatedMole;
+        const newMole = { ...mole };
+        newMole.isVisible = index === random;
+        return newMole;
       })
     );
-    console.log(moleArray);
   }
 
   return (
@@ -69,12 +76,10 @@ export function HitTheMoleGame() {
         setMoleCount={setMoleCount}
       />
       <MoleGameBoard
-        scoreCount={scoreCount}
         moleArray={moleArray}
         hitTheMole={hitTheMole}
+        scoreCount={scoreCount}
       />
-      <CountdownTimer initialCountdownState={gameTime} />
-      <button onClick={() => showRandomMole()}>KRECIK</button>
     </>
   );
-}
+};
