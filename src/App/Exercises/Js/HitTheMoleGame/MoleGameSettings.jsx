@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 export const MoleGameSettings = ({
   gameTime,
   moleCount,
   setGameTime,
   setMoleCount,
+  startStopGame,
 }) => {
   const gameTimeOption = [
     { label: '1 minuta', timeValue: 1 * 60 },
@@ -50,7 +51,7 @@ export const MoleGameSettings = ({
           </div>
           <div>
             <h4>PRZYCISKI STERUJĄCE</h4>
-            <button>START</button>
+            <button onClick={startStopGame}>START</button>
           </div>
         </div>
       </div>
