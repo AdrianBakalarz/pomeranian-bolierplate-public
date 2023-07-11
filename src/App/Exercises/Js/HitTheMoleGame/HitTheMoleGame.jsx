@@ -13,8 +13,8 @@ export const HitTheMoleGame = () => {
   const [gameTime, setGameTime] = useState(defaultGameTime / 1000);
   const [seconds, setSeconds] = useState(gameTime);
   const [scoreCount, setScoreCount] = useState(0);
+  const [highScore, setHighScore] = useState(0);
   const [gameStarted, setGameStarted] = useState(false);
-  // const [timer, setTimer] = useState(gameTime / 1000);
   const [moleArray, setMoleArray] = useState(
     Array(10).fill({ isVisible: false, isWhacked: false })
   );
@@ -24,7 +24,6 @@ export const HitTheMoleGame = () => {
     if (!intervalId && gameStarted) {
       intervalId = setInterval(() => {
         setSeconds((seconds) => seconds - 1);
-        debugger;
       }, 1000);
       return () => clearInterval(intervalId);
     }
@@ -77,6 +76,11 @@ export const HitTheMoleGame = () => {
       })
     );
   }
+  useEffect(() => {
+    if (scoreCount > highScore) {
+      setHighScore(scoreCount);
+    }
+  }, [highScore, scoreCount]);
 
   return (
     <>
@@ -88,6 +92,10 @@ export const HitTheMoleGame = () => {
           setMoleCount={setMoleCount}
           startStopGame={() => setGameStarted((prev) => !prev)}
           gameStarted={gameStarted}
+          highScore={highScore}
+          scoreCount={scoreCount}
+          setSeconds={setSeconds}
+          setScoreCount={setScoreCount}
         />
       ) : null}
       {gameStarted ? <Timer time={formatTime(seconds)} /> : null}
@@ -96,11 +104,13 @@ export const HitTheMoleGame = () => {
           moleArray={moleArray}
           hitTheMole={hitTheMole}
           scoreCount={scoreCount}
+          setSeconds={setSeconds}
+          gameStarted={gameStarted}
+          formatTime={formatTime}
+          seconds={seconds}
         />
       ) : null}
     </>
   );
 };
-const Timer = ({ time }) => {
-  return <p>Pozostały czas {time}</p>;
-};
+const Timer = ({ time }) => {};
