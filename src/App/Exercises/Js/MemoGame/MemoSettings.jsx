@@ -26,7 +26,7 @@ export const MemoSettings = ({
         {score > 0 && (
           <h2>
             Gratulacje twój wynik to {score} w czasie {formatTime(gameTime)} na
-            liczbie elemwntów równej {finalSettings}
+            liczbie elementów równej {finalSettings}
           </h2>
         )}
         <div className="gameOptionsButtons">

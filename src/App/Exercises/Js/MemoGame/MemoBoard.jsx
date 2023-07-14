@@ -15,19 +15,16 @@ export const MemoBoard = ({
     const generateMemoArray = () => {
       const memoSymbols = 'ABCDEFGHIJKLMNOPRSTUWXYZ'; // Symbole 24, max tablica 48
       const memoCardsSymbols = [];
-
       for (let i = 0; i < boardSize / 2; i++) {
         const index = Math.floor(Math.random() * (24 - 0) + 0);
         const letter = memoSymbols.charAt(index);
 
         memoCardsSymbols.push({
           symbol: letter,
-          isVisibleLetteer: false,
+          isVisibleLetter: false,
           isVisibleBox: true,
         });
       }
-
-      console.log(memoCardsSymbols);
       const shuffledCards = [...memoCardsSymbols, ...memoCardsSymbols].sort(
         () => Math.random() - 0.5
       );
@@ -38,11 +35,10 @@ export const MemoBoard = ({
     generateMemoArray();
   }, [boardSize]);
 
-  const VisableFunction = (index, memo) => {
+  const VisibleFunction = (index, memo) => {
     const updatedMemoArray = [...memoArray];
     updatedMemoArray[index] = { ...memo, isVisible: !memo.isVisibleLetteer };
     const isVisibleLetters = updatedMemoArray.filter((memo) => memo.isVisible);
-    console.log({ index });
 
     if (isVisibleLetters.length === 2) {
       setTimeout(() => {
@@ -51,10 +47,8 @@ export const MemoBoard = ({
         }, 2000);
       });
     }
-
     return updatedMemoArray;
   };
-
   return (
     <>
       <div className="container">
@@ -74,7 +68,6 @@ export const MemoBoard = ({
           </button>
         </div>
       </div>
-
       <div className="memoGame">
         {memoArray.map((memo, index) => {
           return (
@@ -82,7 +75,7 @@ export const MemoBoard = ({
               <span
                 onClick={() => {
                   setScore(++score);
-                  setMemoArray(VisableFunction(index, memo));
+                  setMemoArray(VisibleFunction(index, memo));
                 }}
               >
                 <div id="square">{memo.isVisible && memo.symbol}</div>
