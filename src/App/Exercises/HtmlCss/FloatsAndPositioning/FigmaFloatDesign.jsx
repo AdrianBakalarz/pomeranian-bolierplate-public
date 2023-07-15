@@ -2,14 +2,13 @@ import React from 'react';
 import './styles.css';
 import { Link } from 'react-router-dom';
 import snowdog from './snowdog.jpg';
-import ArrowBack from '@mui/icons-material/ArrowBack';
 
 const FigmaFloatDesign = () => {
   return (
     <>
       <div>
         <h3>
-          <Link className="float-links" to="/Blog" startIcon={<ArrowBack />}>
+          <Link className="float-links" to="/Blog">
             {' '}
             BLOG
           </Link>
