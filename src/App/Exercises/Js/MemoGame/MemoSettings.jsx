@@ -29,11 +29,11 @@ export const MemoSettings = ({
             liczbie elementów równej {finalSettings}
           </h2>
         )}
+
         <div className="gameOptionsButtons">
           <div className="gameButtonsRows">
             <div>
               <h4>Liczba elementów {boardSize}</h4>
-
               {gameTimeOption.map(({ label, boardValue }) => (
                 <button
                   className={boardSize === boardValue ? 'activeButton' : ''}

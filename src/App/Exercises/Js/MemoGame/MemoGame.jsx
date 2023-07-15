@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './style.css';
 import { MemoSettings } from './MemoSettings';
 import { MemoBoard } from './MemoBoard';
+
 export function MemoGame() {
   const defaultBoardSize = 16;
   const [boardSize, setBoardSize] = useState(defaultBoardSize);
