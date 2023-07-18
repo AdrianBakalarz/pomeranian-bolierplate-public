@@ -8,6 +8,8 @@ import { blockRouterMetaData as JsArrayBasics } from './JsArrayBasics/router-dat
 import { blockRouterMetaData as Time } from './Time/router-data';
 import { blockRouterMetaData as HitTheMoleGame } from './HitTheMoleGame/router-data';
 import { blockRouterMetaData as MemoGame } from './MemoGame/router-data';
+import { blockRouterMetaData as jsStorages } from './jsStorages/routerr-data';
+import { blockRouterMetaData as SavedInput } from './SavedInput/router-data';
 
 export const blockRouterMetaData = [
   blockRouterMetaDataJsVariables1,
@@ -18,5 +20,7 @@ export const blockRouterMetaData = [
   Time,
   HitTheMoleGame,
   MemoGame,
+  jsStorages,
+  SavedInput,
 ];
 export const blockRouterData = getParsedRouterDataList(blockRouterMetaData);
