@@ -11,6 +11,7 @@ import { blockRouterMetaData as MemoGame } from './MemoGame/router-data';
 import { blockRouterMetaData as jsStorages } from './jsStorages/routerr-data';
 import { blockRouterMetaData as SavedInput } from './SavedInput/router-data';
 import { blockRouterMetaData as TryCatchAndFinally } from './TryCatchAndFinally/router-data';
+import { blockRouterMetaData as Prototypes } from './Prototypes/router-data'
 
 export const blockRouterMetaData = [
   blockRouterMetaDataJsVariables1,
@@ -24,5 +25,6 @@ export const blockRouterMetaData = [
   jsStorages,
   SavedInput,
   TryCatchAndFinally,
+  Prototypes
 ];
 export const blockRouterData = getParsedRouterDataList(blockRouterMetaData);
