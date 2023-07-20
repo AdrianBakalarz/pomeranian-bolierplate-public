@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { debounce, throttle } from 'lodash';
+import { ApiCallExercise } from './ApiCall';
 /* API is needed to deliever an id based on provided user name length
 HTML will need an input for that
 */
@@ -52,6 +53,7 @@ export function TryCatchAndFinally() {
           throtleHandleAddName(event.target.value);
         }}
       />
+      <ApiCallExercise />
     </div>
   );
 }
