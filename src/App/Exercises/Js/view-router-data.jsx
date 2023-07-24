@@ -13,6 +13,7 @@ import { blockRouterMetaData as SavedInput } from './SavedInput/router-data';
 import { blockRouterMetaData as TryCatchAndFinally } from './TryCatchAndFinally/router-data';
 import { blockRouterMetaData as Prototypes } from './Prototypes/router-data';
 import { blockRouterMetaData as ThisKeywords } from './ThisKeywords/router-data';
+import { blockRouterMetaData as Promises} from './Promises/router-data';
 
 export const blockRouterMetaData = [
   blockRouterMetaDataJsVariables1,
@@ -28,5 +29,6 @@ export const blockRouterMetaData = [
   TryCatchAndFinally,
   Prototypes,
   ThisKeywords,
+  Promises,
 ];
 export const blockRouterData = getParsedRouterDataList(blockRouterMetaData);

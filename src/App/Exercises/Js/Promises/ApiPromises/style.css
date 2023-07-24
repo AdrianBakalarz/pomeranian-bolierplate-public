@@ -1,0 +1,26 @@
+.container--exercise-api {
+}
+
+.container--grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  padding: 16px;
+}
+.container--grid-wrapper .container--grid-tile {
+  font-weight: bold;
+  text-transform: capitalize;
+  border: 1px solid;
+  padding: 8px;
+  border-radius: 8px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 0 0 calc((100% / 3) - calc(8px * 2) / 3);
+  background-color: lightgray;
+}
+.imageOfPokemon {
+  height: 200px;
+  width: 200px;
+  display: flex;
+  margin: 0 auto;
+}
