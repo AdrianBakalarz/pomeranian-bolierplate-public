@@ -1,3 +1,6 @@
+import { useEffect } from 'react';
+import { useState } from 'react';
+
 export function AsyncAwaitExercise() {
   const fetchDataFast = () =>
     new Promise((resolve) =>
@@ -30,97 +33,112 @@ export function AsyncAwaitExercise() {
   const logMultiple = (logs) => logs.forEach(cb);
   const errorLogger = (err) => console.error(err);
 
-  return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '1em',
-        width: '400px',
-      }}
-    >
-      {/* <button onClick={() => fetchDataFast()}>fetchDataFast</button>
-    <button onClick={() => fetchDataLong()}>fetchDataLong</button>
-    <button onClick={() => fetchDataError()}>fetchDataError</button> */}
-      {/* Methods */}
-      {/* ALL */}
-      <button
-        onClick={() =>
-          Promise.all([fetchDataFast(), fetchDataLong()]).then(logger)
-        }
-      >
-        Get all
-      </button>
-      <button
-        onClick={() =>
-          Promise.all([fetchDataFast(), fetchDataLong(), fetchDataError()])
-            .then(logger)
-            .catch(errorLogger)
-        }
-      >
-        Get all with error
-      </button>
-      {/* ALLSETTLED */}
-      <button
-        onClick={() =>
-          Promise.allSettled([fetchDataFast(), fetchDataLong()])
-            .then(logger)
-            .catch(errorLogger)
-        }
-      >
-        Get allSettled without error
-      </button>
-      <button
-        onClick={() =>
-          Promise.allSettled([
-            fetchDataFast(),
-            fetchDataLong(),
-            fetchDataError(),
-          ])
-            .then(logMultiple)
-            .catch(errorLogger)
-        }
-      >
-        Get allSettled with error
-      </button>
-      {/* ANY */}
-      <button
-        onClick={() =>
-          Promise.any([fetchDataFast(), fetchDataLong()])
-            .then(logger)
-            .catch(errorLogger)
-        }
-      >
-        Get any without error
-      </button>
-      <button
-        onClick={() =>
-          Promise.any([fetchDataFast(), fetchDataLong(), fetchDataError()])
-            .then(logger)
-            .catch(errorLogger)
-        }
-      >
-        Get any with error
-      </button>
-      {/* RACE */}
-      <button
-        onClick={() =>
-          Promise.race([fetchDataFast(), fetchDataLong()])
-            .then(logger)
-            .catch(errorLogger)
-        }
-      >
-        Get race without error
-      </button>
-      <button
-        onClick={() =>
-          Promise.race([fetchDataFast(), fetchDataLong(), fetchDataError()])
-            .then(logger)
-            .catch(errorLogger)
-        }
-      >
-        Get race with error
-      </button>
-    </div>
-  );
+  const [posts, setPosts] = useState([]);
+
+  useEffect(() => {
+    const getPosts = () => {
+      return fetch('')
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((e) => console.error(e));
+    };
+    getPosts();
+
+    return () => getPosts;
+  });
+
+
+  // return (
+  //   <div
+  //     style={{
+  //       display: 'flex',
+  //       flexDirection: 'column',
+  //       gap: '1em',
+  //       width: '400px',
+  //     }}
+  //   >
+  //     {/* <button onClick={() => fetchDataFast()}>fetchDataFast</button>
+  //   <button onClick={() => fetchDataLong()}>fetchDataLong</button>
+  //   <button onClick={() => fetchDataError()}>fetchDataError</button> */}
+  //     {/* Methods */}
+  //     {/* ALL */}
+  //     <button
+  //       onClick={() =>
+  //         Promise.all([fetchDataFast(), fetchDataLong()]).then(logger)
+  //       }
+  //     >
+  //       Get all
+  //     </button>
+  //     <button
+  //       onClick={() =>
+  //         Promise.all([fetchDataFast(), fetchDataLong(), fetchDataError()])
+  //           .then(logger)
+  //           .catch(errorLogger)
+  //       }
+  //     >
+  //       Get all with error
+  //     </button>
+  //     {/* ALLSETTLED */}
+  //     <button
+  //       onClick={() =>
+  //         Promise.allSettled([fetchDataFast(), fetchDataLong()])
+  //           .then(logger)
+  //           .catch(errorLogger)
+  //       }
+  //     >
+  //       Get allSettled without error
+  //     </button>
+  //     <button
+  //       onClick={() =>
+  //         Promise.allSettled([
+  //           fetchDataFast(),
+  //           fetchDataLong(),
+  //           fetchDataError(),
+  //         ])
+  //           .then(logMultiple)
+  //           .catch(errorLogger)
+  //       }
+  //     >
+  //       Get allSettled with error
+  //     </button>
+  //     {/* ANY */}
+  //     <button
+  //       onClick={() =>
+  //         Promise.any([fetchDataFast(), fetchDataLong()])
+  //           .then(logger)
+  //           .catch(errorLogger)
+  //       }
+  //     >
+  //       Get any without error
+  //     </button>
+  //     <button
+  //       onClick={() =>
+  //         Promise.any([fetchDataFast(), fetchDataLong(), fetchDataError()])
+  //           .then(logger)
+  //           .catch(errorLogger)
+  //       }
+  //     >
+  //       Get any with error
+  //     </button>
+  //     {/* RACE */}
+  //     <button
+  //       onClick={() =>
+  //         Promise.race([fetchDataFast(), fetchDataLong()])
+  //           .then(logger)
+  //           .catch(errorLogger)
+  //       }
+  //     >
+  //       Get race without error
+  //     </button>
+  //     <button
+  //       onClick={() =>
+  //         Promise.race([fetchDataFast(), fetchDataLong(), fetchDataError()])
+  //           .then(logger)
+  //           .catch(errorLogger)
+  //       }
+  //     >
+  //       Get race with error
+  //     </button>
+  //   </div>
+  // );
 }
