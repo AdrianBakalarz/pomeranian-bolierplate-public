@@ -68,10 +68,11 @@ export function TodoItem({ todo, handleFetchTodoData }) {
   );
 }
 
-/*
-    utworzenie buttona
+/*  -------DONE-----------
+    utworzenie buttona 
     wybór elementu do usunięcia
     request do API
     sprawdzenie czy API wykonało usunięcie todo'sa
     zaktualizowanie listy todo'sów po usunięciu
-*/
+*/  
+

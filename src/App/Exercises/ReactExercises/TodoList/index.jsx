@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './style.css';
 import { TodoItem } from './TodoItem/TodoItem';
+import { TodoForm } from './TodoForm/TodoForm';
 
 export const BASE_API_URL = 'http://localhost:3333/api';
 
 export function TodoList() {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState([]);
+  const [isAddingMode, setAddingMode] = useState(false);
 
   const handleFetchTodoData = async () => {
     const timeOutDuration = 5000; //5sec czekania na odpoiedź serwera
@@ -43,18 +45,45 @@ export function TodoList() {
 
       {error && <p>{error}</p>}
 
-      <div className="todo-container__list">
-        {todoList.length > 0 &&
-          todoList.map((todo) => {
-            return (
-              <TodoItem
-                todo={todo}
-                key={todo.id}
-                handleFetchTodoData={handleFetchTodoData}
-              />
-            );
-          })}
-      </div>
+      {isAddingMode && <TodoForm setAddingMode={setAddingMode} />}
+
+      {!isAddingMode && (
+        <>
+          <div className="todo-container__list">
+            {todoList.length > 0 &&
+              todoList.map((todo) => {
+                return (
+                  <TodoItem
+                    todo={todo}
+                    key={todo.id}
+                    handleFetchTodoData={handleFetchTodoData}
+                  />
+                );
+              })}
+          </div>
+          <button
+            className="button-add"
+            onClick={() => {
+              setAddingMode(true);
+            }}
+          >
+            DODAJ
+          </button>
+        </>
+      )}
     </div>
   );
 }
+
+/*
+    DODAWANIE TODO'SA
+    button "dodaj"
+   widok formularza dodawania z dwoma inputami i przyciskiem
+   "zapisz" i "cofnij"
+    obsługę widoku "przełączenie widoku"
+    request do API dodający nowe TODO
+    jezele request sie powiedzie to:
+    informujemy o powodzeniu
+    czyscimy formularz
+    po kliknieciu "cofnij" odswiezamy liste
+*/
