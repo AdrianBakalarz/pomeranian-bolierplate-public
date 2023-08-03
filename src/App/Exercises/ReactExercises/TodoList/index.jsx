@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './style.css';
-import { formatDate } from '../../../helpers/formatDate';
+import { TodoItem } from './TodoItem/TodoItem';
 
-const BASE_API_URL = 'http://localhost:3333/api';
+export const BASE_API_URL = 'http://localhost:3333/api';
 
 export function TodoList() {
-  const [getTodoList, setTodoList] = useState([]);
-  const [getError, setError] = useState([]);
+  const [todoList, setTodoList] = useState([]);
+  const [error, setError] = useState([]);
 
   const handleFetchTodoData = async () => {
     const timeOutDuration = 5000; //5sec czekania na odpoiedź serwera
@@ -39,44 +39,19 @@ export function TodoList() {
 
   return (
     <div className="todo-container">
-      <h2 className="todo-container__title">Todo List 2</h2>
+      <h2 className="todo-container__title">Todo List</h2>
 
-      {getError && <p>{getError}</p>}
+      {error && <p>{error}</p>}
 
       <div className="todo-container__list">
-        {getTodoList.length > 0 &&
-          getTodoList.map((todo) => {
-            const itemClasses = `todo-container__list__item ${
-              todo.isDone ? 'todo-container__list__item--darker' : ''
-            }`;
-
+        {todoList.length > 0 &&
+          todoList.map((todo) => {
             return (
-              <div className={itemClasses} key={todo.id}>
-                <div className="todo-container__list__item__wrapper">
-                  <h3 className="todo-container__list__item__wrapper__title">
-                    {todo.title}
-                  </h3>
-                  <div className="todo-container__list__item__wrapper__text todo-container__list__item__wrapper__text--smaller">
-                    {todo.author}
-                  </div>
-                  <div className="todo-container__list__item__wrapper__text todo-container__list__item__wrapper__text--smaller">
-                    {formatDate(todo.createdAt)}
-                  </div>
-                  <p className="todo-container__list__item__wrapper__text">
-                    {todo.note}
-                  </p>
-                </div>
-                <div className="todo-container__list__item__side">
-                  {todo.isDone && (
-                    <>
-                      <div className="todo-container__list__item__side__checkmark">
-                        &#10003;
-                      </div>
-                      <div>{formatDate(todo.doneDate)}</div>
-                    </>
-                  )}
-                </div>
-              </div>
+              <TodoItem
+                todo={todo}
+                key={todo.id}
+                handleFetchTodoData={handleFetchTodoData}
+              />
             );
           })}
       </div>
