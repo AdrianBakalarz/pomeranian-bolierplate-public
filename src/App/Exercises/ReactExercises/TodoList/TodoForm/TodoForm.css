@@ -1,0 +1,67 @@
+.todo-form__field {
+  margin: 20px;
+}
+
+.todo-form__field__label {
+  display: block;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.todo-form__buttons {
+  display: flex;
+}
+.todo-form__message-error {
+  background-color: red;
+  font-weight: bold;
+}
+.todo-form__buttons {
+  display: flex;
+}
+
+.button-add {
+  padding: 1.05rem 2rem 1.05rem 2rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  border-color: #23213d;
+  border: 1px;
+  gap: 1rem;
+  background: #23213d;
+  font-family: Poppins;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 31px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: white;
+  width: 15rem;
+  cursor: pointer;
+}
+.button-add:hover {
+  background-color: red;
+}
+.button-back {
+  padding: 1.05rem 2rem 1.05rem 2rem;
+  margin: 1rem;
+  border-radius: 0.5rem;
+  border-color: #23213d;
+  border: 1px;
+  gap: 1rem;
+  background: #23213d;
+  font-family: Poppins;
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 31px;
+  letter-spacing: 0em;
+  text-align: center;
+  color: white;
+  width: 15rem;
+  cursor: pointer;
+}
+.button-back:hover {
+  background-color: red;
+}
+.button-add:disabled {
+  background-color: #ccc;
+}
