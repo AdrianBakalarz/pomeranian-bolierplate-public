@@ -1,38 +1,26 @@
-:root {
-  --color-primary-blue: #3e63f6;
-  --color-dark-blue: #004286;
-  --color-dark-gray: #3d3d3d;
-  --color-blue-gray: #525e70;
-  --color-black: #000000;
-  --color-grey: rgb(60, 64, 67);
-  --color-white: rgb(255, 255, 255);
+.todo-form__field {
+  margin: 20px;
 }
 
-body,
-textarea {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.todo-form__field__label {
+  display: block;
+  font-weight: bold;
+  font-size: 1.2em;
+  margin-bottom: 10px;
 }
 
-textarea {
-  font-size: 2em;
+.todo-form__buttons {
+  display: flex;
+}
+.todo-form__message-error {
+  background-color: red;
+  font-weight: bold;
+}
+.todo-form__buttons {
+  display: flex;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-}
-.button-save {
+.button-add {
   padding: 1.05rem 2rem 1.05rem 2rem;
   margin: 1rem;
   border-radius: 0.5rem;
@@ -50,7 +38,7 @@ code {
   width: 15rem;
   cursor: pointer;
 }
-.button-save:hover {
+.button-add:hover {
   background-color: red;
 }
 .button-back {
@@ -73,4 +61,7 @@ code {
 }
 .button-back:hover {
   background-color: red;
+}
+.button-add:disabled {
+  background-color: #ccc;
 }
