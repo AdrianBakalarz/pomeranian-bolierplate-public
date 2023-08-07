@@ -8,6 +8,7 @@ import { Block9MetaData } from './Block9/router-data';
 import { MaterialUIBasicElementsMetaData } from './MaterialUIBasicElements/router-data';
 import { blockRouterMetaData as LocalDevAndFetch } from './LocalDevAndFetch/router-data';
 import { blockRouterMetaData as TodoList } from './TodoList/router-data';
+import { blockRouterMetaData as ReactUseRef } from './ReactUseRef/router-data';
 
 export const blockRouterMetaData = [
   SubRouteExampleMetaData,
@@ -16,5 +17,6 @@ export const blockRouterMetaData = [
   MaterialUIBasicElementsMetaData,
   LocalDevAndFetch,
   TodoList,
+  ReactUseRef,
 ];
 export const blockRouterData = getParsedRouterDataList(blockRouterMetaData);
