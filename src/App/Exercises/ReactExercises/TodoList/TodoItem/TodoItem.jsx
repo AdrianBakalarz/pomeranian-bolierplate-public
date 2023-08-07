@@ -1,11 +1,20 @@
-import './TodoItem.css';
-import { formatDate } from '../../../../helpers/formatDate';
-import { BinIcon } from '../../../../Images/Icons/BinIcon/BinIcon';
-import { BASE_API_URL } from '..';
 import axios from 'axios';
+import { formatDate } from '../../../../../helpers/formatDate';
+import { BinIcon } from '../../../../Images/Icons/BinIcon';
+import { EditIcon } from '../../../../Images/Icons/EditIcon';
+import { CheckMarkIcon } from '../../../../Images/Icons/CheckMarkIcon';
+import './TodoItem.css';
+import { BASE_API_URL } from '../TodoList2';
 import { useState } from 'react';
 
-export function TodoItem({ todo, handleFetchTodoData }) {
+export function TodoItem({
+  todo,
+  handleFetchTodoData,
+  setIdForEdit,
+  setFormVisibility,
+  updateTodoList,
+  setTest,
+}) {
   const { id, title, author, createdAt, isDone, doneDate, note } = todo;
   const [isRemoveError, setRemoveError] = useState(false);
 
@@ -13,17 +22,25 @@ export function TodoItem({ todo, handleFetchTodoData }) {
 
   function handleRemoveClick() {
     axios
-      .delete(BASE_API_URL + /todo/ + id)
-      .then((response) => {
-        console.log('usunięty todo id: ', response);
+      .delete(BASE_API_URL + '/todo/' + id)
+      .then(() => {
         handleFetchTodoData();
       })
-      .catch((error) => {
-        console.log('usuwanie nie udało się: ', error);
+      .catch(() => {
         setRemoveError(true);
       });
+  }
 
-    axios.delete(BASE_API_URL + '/todo/' + id);
+  function handleMarkAsDoneClick() {
+    axios
+      .put(BASE_API_URL + '/todo/' + id + '/markAsDone')
+      .then((response) => {
+        const updatedTodo = response.data;
+        updateTodoList(updatedTodo);
+      })
+      .catch(() => {
+        // -----
+      });
   }
 
   return (
@@ -40,11 +57,27 @@ export function TodoItem({ todo, handleFetchTodoData }) {
       </div>
       <div className="todo-item__actions">
         <button
-          className="todo-item__actions__button 
-          todo-item__actions__icon"
+          className="todo-item__actions__button"
           onClick={() => handleRemoveClick()}
         >
           <BinIcon isError={isRemoveError} />
+        </button>
+        <button
+          className="todo-item__actions__button"
+          onClick={() => {
+            setIdForEdit(id);
+            setFormVisibility(true);
+          }}
+        >
+          <EditIcon />
+        </button>
+        <button
+          className="todo-item__actions__button"
+          onClick={() => {
+            handleMarkAsDoneClick();
+          }}
+        >
+          <CheckMarkIcon />
         </button>
         {isRemoveError && (
           <div className="todo-item__actions__error-message">
@@ -56,7 +89,7 @@ export function TodoItem({ todo, handleFetchTodoData }) {
           <>
             <div
               className="todo-item__actions__icon 
-              todo-item__actions__icon--check-mark"
+            todo-item__actions__icon--check-mark"
             >
               &#10003;
             </div>
@@ -68,11 +101,19 @@ export function TodoItem({ todo, handleFetchTodoData }) {
   );
 }
 
-/*  -------DONE-----------
-    utworzenie buttona 
-    wybór elementu do usunięcia
-    request do API
-    sprawdzenie czy API wykonało usunięcie todo'sa
-    zaktualizowanie listy todo'sów po usunięciu
-*/  
+/**
+ * USUWANIE TODOSA:
+ * utworzenie buttona
+ * wybór elementu do usunięcia
+ * request do API
+ * sprawdzenie czy API wykonało usunięcie todosa
+ * zaktualizowanie listy todosów po usunięciu
+ */
 
+/**
+ * ODZNACZANIE `DONE` TODOSA:
+ * utworzenie buttona
+ * wybór elementu do odznaczenia
+ * request do API
+ * sprawdzenie czy API wykonało i od razu aktualizacja odpowiedniego todosa
+ */
