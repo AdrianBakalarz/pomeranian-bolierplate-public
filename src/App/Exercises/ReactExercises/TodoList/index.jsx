@@ -7,7 +7,7 @@ import { TodoForm } from './TodoForm/TodoForm';
 export const BASE_API_URL = 'http://localhost:3333/api';
 const TIMEOUT_DURATION = 5000; //5sec czekania na odpoiedź serwera
 
-export function TodoList2() {
+export function TodoList() {
   const [todoList, setTodoList] = useState([]);
   const [error, setError] = useState([]);
   const [isFormVisible, setFormVisibility] = useState(false);
