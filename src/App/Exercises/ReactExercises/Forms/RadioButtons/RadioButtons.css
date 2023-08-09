@@ -3,13 +3,13 @@
 }
 .radio input[type='radio'] {
   position: absolute;
-  visibility: hidden;
+  opacity: 0;
 }
 .radio input[type='radio'] + .radio-label:before {
   content: '';
   background: #f4f4f4;
   border-radius: 100%;
-  border: 1px solid #fe3756;
+  border: 1px solid #ccc;
   display: inline-block;
   width: 1.4em;
   height: 1.4em;
