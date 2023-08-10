@@ -5,6 +5,25 @@ import { CheckBoxes } from './CheckBoxes/CheckBoxes';
 import './Form.css';
 import { useState } from 'react';
 import Select from 'react-select';
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+import { getFirestore } from 'firebase/firestore';
+import { addDoc, collection } from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyCZBu861Dgo072i0_qBQwm8nYARG3Q3ZhI',
+  authDomain: 'react-form-project-403a8.firebaseapp.com',
+  projectId: 'react-form-project-403a8',
+  storageBucket: 'react-form-project-403a8.appspot.com',
+  messagingSenderId: '176516735759',
+  appId: '1:176516735759:web:c3402a318af4991b44547a',
+  measurementId: 'G-FKL42HKQ4R',
+};
+
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
+const db = getFirestore(app);
 
 const validateEmail = (value) => {
   const emailPattern = /^[^\s@]+@[^\s@]+.[^\s@]+$/;
@@ -33,7 +52,7 @@ const requiredFields = [
   'nameAndSurname',
   'email',
   'product',
-  'paymentTape',
+  'paymentType',
   'consents',
 ];
 
@@ -84,10 +103,17 @@ export function FormsExercise() {
     });
   }
 
-  function handleSubmit() {
-    const { nameAndSurname, email, product, paymentTape, consents } = formData;
-    if (nameAndSurname && email && product && paymentTape && consents) {
+  async function handleSubmit() {
+    const { nameAndSurname, email, product, paymentType, consents } = formData;
+    if (nameAndSurname && email && product && paymentType && consents) {
       console.log(('Dane wysłane poprawnie: ', formData));
+      try {
+        const docRef = await addDoc(collection(db, 'Orders'), formData);
+        console.log('Document written with ID: ', docRef.id);
+        console.log(docRef);
+      } catch (e) {
+        console.error('Error adding document: ', e);
+      }
     } else {
       setIsAllRequiredFieldsFilled(false);
     }
@@ -151,7 +177,7 @@ export function FormsExercise() {
       </MainSection>
 
       <MainSection title="DANE DO REALIZACJI ZAMÓWIENIA">
-        <FieldSection title="Imię i nazwisko">
+        <FieldSection title="Imię i nazwisko*">
           <input
             type="text"
             name="nameAndSurname"
@@ -165,7 +191,7 @@ export function FormsExercise() {
             </p>
           )}
         </FieldSection>
-        <FieldSection title="Email">
+        <FieldSection title="Email*">
           <input
             type="text"
             name="email"
@@ -195,7 +221,7 @@ export function FormsExercise() {
       </MainSection>
 
       <MainSection title="ZGODY">
-        <FieldSection title="Regulamin">
+        <FieldSection title="Regulamin*">
           <CheckBoxes
             list={[
               {
