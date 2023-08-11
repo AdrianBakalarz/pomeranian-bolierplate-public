@@ -2,16 +2,22 @@ import { MainSection } from './MainSection/MainSection';
 import { FieldSection } from './FieldSection/FieldSection';
 import { RadioButtons } from './RadioButtons/RadioButtons';
 import { CheckBoxes } from './CheckBoxes/CheckBoxes';
+import { PasswordMatchCheck } from './Password/PasswordMatchCheck';
 import './Form.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
-import { getFirestore } from 'firebase/firestore';
-import { addDoc, collection } from 'firebase/firestore';
+import {
+  getFirestore,
+  addDoc,
+  collection,
+  getDoc,
+  doc,
+} from 'firebase/firestore';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCZBu861Dgo072i0_qBQwm8nYARG3Q3ZhI',
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: 'react-form-project-403a8.firebaseapp.com',
   projectId: 'react-form-project-403a8',
   storageBucket: 'react-form-project-403a8.appspot.com',
@@ -66,10 +72,26 @@ export function FormsExercise() {
       extraDocuments: true,
     },
     nameAndSurname: '',
+    nick: '',
+    address: '',
     email: '',
+    number: '',
+    password: '',
+    passwordReturn: '',
     details: '',
+    approval: false,
     consents: false,
   });
+
+  const [orderID, setOrderId] = useState();
+
+  useEffect(() => {
+    if (orderID) {
+      getDoc(doc(db, 'Orders', orderID)).then((response) => {
+        console.log(response.data());
+      });
+    }
+  }, [orderID]);
 
   const [isAllRequiredFieldsFilled, setIsAllRequiredFieldsFilled] =
     useState(true);
@@ -81,8 +103,20 @@ export function FormsExercise() {
       ? formData.nameAndSurname.trim().includes
       : true;
 
+  const isNickValid = formData.nick.length > 0;
+
+  const isAdressValid =
+    formData.address.length > 0 ? formData.address.trim().includes : true;
+
+  const isPhoneNumberValid = formData.number.length === 9;
+
   const isFieldValid =
-    isEmailValid && isNameAndSurnameValid && isAllRequiredFieldsFilled;
+    isEmailValid &&
+    isNameAndSurnameValid &&
+    isAllRequiredFieldsFilled &&
+    isNickValid &&
+    isAdressValid &&
+    isPhoneNumberValid;
 
   function updateAdditionalOptions(fieldName, newValue) {
     setIsAllRequiredFieldsFilled(true);
@@ -104,13 +138,28 @@ export function FormsExercise() {
   }
 
   async function handleSubmit() {
-    const { nameAndSurname, email, product, paymentType, consents } = formData;
-    if (nameAndSurname && email && product && paymentType && consents) {
+    const {
+      nameAndSurname,
+      email,
+      address,
+      number,
+      product,
+      paymentType,
+      consents,
+    } = formData;
+    if (
+      nameAndSurname &&
+      email &&
+      address &&
+      number &&
+      product &&
+      paymentType &&
+      consents
+    ) {
       console.log(('Dane wysłane poprawnie: ', formData));
       try {
         const docRef = await addDoc(collection(db, 'Orders'), formData);
-        console.log('Document written with ID: ', docRef.id);
-        console.log(docRef);
+        setOrderId(docRef.id);
       } catch (e) {
         console.error('Error adding document: ', e);
       }
@@ -120,15 +169,16 @@ export function FormsExercise() {
   }
 
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        handleSubmit();
-      }}
-    >
-      <MainSection title="ZAMÓWIENIE PRODUKTU">
-        <FieldSection title="Wybierz produkt*">
-          {/* <select
+    <>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <MainSection title="ZAMÓWIENIE PRODUKTU">
+          <FieldSection title="Wybierz produkt*">
+            {/* <select
             name="product"
             value={formData.product}
             onChange={(event) => {
@@ -142,114 +192,194 @@ export function FormsExercise() {
             ))}
           </select> */}
 
-          <Select
-            value={productOptions.find(
-              (item) => item.value === formData.product
+            <Select
+              value={productOptions.find(
+                (item) => item.value === formData.product
+              )}
+              options={productOptions}
+              onChange={(selectedItem) => {
+                setFormData({
+                  ...formData,
+                  product: selectedItem.value,
+                });
+              }}
+            />
+          </FieldSection>
+          <FieldSection title="Wybierz formę płatności*">
+            <RadioButtons
+              name="paymentType"
+              options={paymentTypeOptions}
+              value={formData.paymentType}
+              onChange={updateFormData}
+            />
+          </FieldSection>
+          <FieldSection title="Opcje dodatkowe do zamówienia*">
+            <CheckBoxes
+              list={additionalOptionList.map((item) => {
+                return {
+                  ...item,
+                  isChecked: formData.additionaOptions[item.fieldName],
+                };
+              })}
+              onChange={updateAdditionalOptions}
+            />
+          </FieldSection>
+        </MainSection>
+
+        <MainSection title="DANE DO REALIZACJI ZAMÓWIENIA">
+          <FieldSection title="Imię i nazwisko*">
+            <input
+              type="text"
+              name="nameAndSurname"
+              value={formData.nameAndSurname}
+              onChange={updateFormData}
+              className={!isNameAndSurnameValid ? 'input-field-error' : ''}
+            />
+            {!isNameAndSurnameValid && (
+              <p className="input-field-error-message">
+                Nie podałeś(-aś) nazwiska!
+              </p>
             )}
-            options={productOptions}
-            onChange={(selectedItem) => {
-              setFormData({
-                ...formData,
-                product: selectedItem.value,
-              });
-            }}
-          />
-        </FieldSection>
-        <FieldSection title="Wybierz formę płatności*">
-          <RadioButtons
-            name="paymentType"
-            options={paymentTypeOptions}
-            value={formData.paymentType}
-            onChange={updateFormData}
-          />
-        </FieldSection>
-        <FieldSection title="Opcje dodatkowe do zamówienia*">
-          <CheckBoxes
-            list={additionalOptionList.map((item) => {
-              return {
-                ...item,
-                isChecked: formData.additionaOptions[item.fieldName],
-              };
-            })}
-            onChange={updateAdditionalOptions}
-          />
-        </FieldSection>
-      </MainSection>
+          </FieldSection>
 
-      <MainSection title="DANE DO REALIZACJI ZAMÓWIENIA">
-        <FieldSection title="Imię i nazwisko*">
-          <input
-            type="text"
-            name="nameAndSurname"
-            value={formData.nameAndSurname}
-            onChange={updateFormData}
-            className={!isNameAndSurnameValid ? 'input-field-error' : ''}
-          />
-          {!isNameAndSurnameValid && (
-            <p className="input-field-error-message">
-              Nie podałeś(-aś) nazwiska!
-            </p>
-          )}
-        </FieldSection>
-        <FieldSection title="Email*">
-          <input
-            type="text"
-            name="email"
-            value={formData.email}
-            onChange={updateFormData}
-            className={isEmailValid === false ? 'input-field-error' : ''}
-            onBlur={() => {
-              setIsEmailValid(validateEmail(formData.email));
-            }}
-          />
-          {isEmailValid === false && (
-            <p className="input-field-error-message">
-              Email jest nie poprawny!
-            </p>
-          )}
-        </FieldSection>
-        <FieldSection title="Uwagi dodatkowe">
-          <textarea
-            name="details"
-            cols="40"
-            rows="10"
-            style={{ resize: 'none' }}
-            value={formData.details}
-            onChange={updateFormData}
-          ></textarea>
-        </FieldSection>
-      </MainSection>
+          <FieldSection title="Twój pseudonim*">
+            <input
+              type="text"
+              name="nick"
+              value={formData.nick}
+              onChange={updateFormData}
+              className={!isNickValid === false ? 'input-field-error' : ''}
+            />
+          </FieldSection>
 
-      <MainSection title="ZGODY">
-        <FieldSection title="Regulamin*">
-          <CheckBoxes
-            list={[
-              {
-                fieldName: 'consents',
-                label: 'akceptuję regulamin',
-                isChecked: formData.consents,
-              },
-            ]}
-            onChange={(_, newValue) => {
-              setIsAllRequiredFieldsFilled(true);
-              setFormData({
-                ...formData,
-                consents: newValue,
-              });
-            }}
-          />
-        </FieldSection>
-      </MainSection>
+          <FieldSection title="Adres do wysyłki*">
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={updateFormData}
+              className={!isAdressValid === false ? 'input-field-error' : ''}
+            />
+          </FieldSection>
 
-      {!isAllRequiredFieldsFilled && (
-        <p className="input-field-error-message">
-          Wypełnij wszystkie pola wymagane!
-        </p>
-      )}
+          <FieldSection title="Numer kontaktowy*">
+            <input
+              type="tel"
+              name="number"
+              value={formData.number}
+              onChange={updateFormData}
+              className={
+                !isPhoneNumberValid === false ? 'input-field-error' : ''
+              }
+            />
+          </FieldSection>
 
-      <button type="submit" disabled={!isFieldValid}>
-        WYŚLIJ
-      </button>
-    </form>
+          <FieldSection title="Email*">
+            <input
+              type="text"
+              name="email"
+              value={formData.email}
+              onChange={updateFormData}
+              className={isEmailValid === false ? 'input-field-error' : ''}
+              onBlur={() => {
+                setIsEmailValid(validateEmail(formData.email));
+              }}
+            />
+            {isEmailValid === false && (
+              <p className="input-field-error-message">
+                Email jest nie poprawny!
+              </p>
+            )}
+          </FieldSection>
+
+          <FieldSection title="Uwagi dodatkowe">
+            <textarea
+              name="details"
+              cols="40"
+              rows="10"
+              style={{ resize: 'none' }}
+              value={formData.details}
+              onChange={updateFormData}
+            ></textarea>
+          </FieldSection>
+        </MainSection>
+
+        <MainSection title="ZAKŁADANIE KONTA">
+          <FieldSection title="Chcę załozyć konto razem z zamówieniem">
+            <CheckBoxes
+              list={[
+                {
+                  fieldName: 'approval',
+                  label: 'zakładam konto',
+                  isChecked: formData.approval,
+                },
+              ]}
+              onChange={(_, newValue) => {
+                setFormData({
+                  ...formData,
+                  approval: newValue,
+                });
+              }}
+            />
+          </FieldSection>
+          <FieldSection title="Moje hasło">
+            <PasswordMatchCheck>
+              <input
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+              />
+            </PasswordMatchCheck>
+          </FieldSection>
+          <FieldSection title="Powtórz hasło">
+            <PasswordMatchCheck>
+              <input
+                type="password"
+                value={repeatPassword}
+                onChange={handleRepeatPasswordChange}
+              />
+            </PasswordMatchCheck>
+          </FieldSection>
+        </MainSection>
+
+        <MainSection title="ZGODY">
+          <FieldSection title="Regulamin*">
+            <CheckBoxes
+              list={[
+                {
+                  fieldName: 'consents',
+                  label: 'akceptuję regulamin',
+                  isChecked: formData.consents,
+                },
+              ]}
+              onChange={(_, newValue) => {
+                setIsAllRequiredFieldsFilled(true);
+                setFormData({
+                  ...formData,
+                  consents: newValue,
+                });
+              }}
+            />
+          </FieldSection>
+        </MainSection>
+
+        {!isAllRequiredFieldsFilled && (
+          <p className="input-field-error-message">
+            Wypełnij wszystkie pola wymagane!
+          </p>
+        )}
+
+        <button type="submit" disabled={!isFieldValid}>
+          WYŚLIJ
+        </button>
+        {orderID && (
+          <div className="modal-container">
+            <div className="modal">
+              Twoje zamówienie zostało dodane, a jego ID to: {orderID}
+            </div>
+          </div>
+        )}
+      </form>
+    </>
   );
 }
