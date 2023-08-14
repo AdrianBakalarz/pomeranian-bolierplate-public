@@ -260,6 +260,11 @@ export function FormsExercise() {
               onChange={updateFormData}
               className={!isAdressValid === false ? 'input-field-error' : ''}
             />
+            {isAdressValid === false && (
+              <p className="input-field-error-message">
+                Adres jest nie poprawny!
+              </p>
+            )}
           </FieldSection>
 
           <FieldSection title="Numer kontaktowy*">
@@ -322,7 +327,7 @@ export function FormsExercise() {
               }}
             />
           </FieldSection>
-          <FieldSection title="Moje hasło">
+          {/* <FieldSection title="Moje hasło">
             <PasswordMatchCheck>
               <input
                 type="password"
@@ -339,7 +344,7 @@ export function FormsExercise() {
                 onChange={handleRepeatPasswordChange}
               />
             </PasswordMatchCheck>
-          </FieldSection>
+          </FieldSection> */}
         </MainSection>
 
         <MainSection title="ZGODY">

@@ -1,3 +1,7 @@
+.input {
+  width: 400px;
+}
+
 .input-radio__field {
   display: block;
 }
