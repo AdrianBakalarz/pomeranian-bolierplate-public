@@ -5,11 +5,11 @@ export function PrototypesExercise() {
     this.model = model;
   }
 
-  Object.prototype.getBrand = function () {
+  Car.prototype.getBrand = function () {
     return this.brand;
   };
 
-  Object.prototype.getModel = function () {
+  Car.prototype.getModel = function () {
     return this.model;
   };
 

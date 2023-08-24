@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './TodoForm.css';
-import { BASE_API_URL } from '../TodoList2';
+import { BASE_API_URL } from '../index';
 import axios from 'axios';
 
 export function TodoForm({

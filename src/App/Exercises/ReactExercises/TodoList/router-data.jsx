@@ -1,4 +1,4 @@
-import {TodoList} from './index';
+import { TodoList } from './index';
 
 export const blockRouterMetaData = {
   path: 'todo-with-server',

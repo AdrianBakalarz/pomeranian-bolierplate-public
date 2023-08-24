@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { formatDate } from '../../../../../helpers/formatDate';
-import { BinIcon } from '../../../../Images/Icons/BinIcon';
-import { EditIcon } from '../../../../Images/Icons/EditIcon';
-import { CheckMarkIcon } from '../../../../Images/Icons/CheckMarkIcon';
+import { formatDate } from '../../../../helpers/formatDate';
+import { BinIcon } from '../../../../Images/Icons/BinIcon/BinIcon';
+import { EditIcon } from '../../../../Images/Icons/BinIcon/EditIcon';
+import { CheckMarkIcon } from '../../../../Images/Icons/BinIcon/CheckMarkIcon';
 import './TodoItem.css';
-import { BASE_API_URL } from '../TodoList2';
+import { BASE_API_URL } from '../index';
 import { useState } from 'react';
 
 export function TodoItem({
