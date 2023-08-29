@@ -15,6 +15,7 @@ import { blockRouterMetaData as Prototypes } from './Prototypes/router-data';
 import { blockRouterMetaData as ThisKeywords } from './ThisKeywords/router-data';
 import { blockRouterMetaData as Promises } from './Promises/router-data';
 import { blockRouterMetaData as AsyncAwait } from './AsyncAwait/router-data';
+import { blockRouterMetaData as Testing } from './Testing/router-data';
 
 export const blockRouterMetaData = [
   blockRouterMetaDataJsVariables1,
@@ -32,5 +33,6 @@ export const blockRouterMetaData = [
   ThisKeywords,
   Promises,
   AsyncAwait,
+  Testing,
 ];
 export const blockRouterData = getParsedRouterDataList(blockRouterMetaData);

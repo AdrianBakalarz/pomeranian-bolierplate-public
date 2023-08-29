@@ -47,7 +47,7 @@ export const Dashboard = () => {
     <div className="dashboard">
       <header>
         <div className="dashboard-head">
-          <img className="hand-icon" src={hand} alt="zdjecie reki" />
+          <img className="hand-icon" src={hand} alt="zdjecie reki" style={{ width: '22px', height: '22px'}} />
           <h3 style={{ marginLeft: '10px' }}>Hej, tu Adrian!</h3>
         </div>
         <p>
