@@ -67,3 +67,7 @@
   color: #adadad;
   text-decoration: none;
 }
+.dashboard img {
+  width: 43px;
+  height: 43px;
+}
