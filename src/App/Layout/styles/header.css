@@ -46,7 +46,7 @@ header.navigation button.dropdown-menu:hover {
   border: dotted 1px lightgray;
   border-radius: 50%;
 }
-.profile-picture .place-holder {
+.profile-picture .place-holder img {
   border-radius: 50%;
   background-color: #e5e5e5;
   width: 50px;

@@ -5,7 +5,6 @@ import faq from '../Images/faq.svg';
 import edit from '../Images/tiles/edit.svg';
 import booksaved from '../Images/book-saved.svg';
 import code from '../Images/tiles/code.svg';
-import hand from '../Images/hand.svg';
 import AdrianProfile from '../Images/AdrianProfile.jpg';
 import { useState } from 'react';
 
@@ -47,7 +46,6 @@ export const Dashboard = () => {
     <div className="dashboard">
       <header>
         <div className="dashboard-head">
-          <img className="hand-icon" src={hand} alt="zdjecie reki" style={{ width: '22px', height: '22px'}} />
           <h3 style={{ marginLeft: '10px' }}>Hej, tu Adrian!</h3>
         </div>
         <p>
@@ -73,10 +71,8 @@ export const Dashboard = () => {
       <aside>
         <div className="profile-img">
           <img className="img-placeholder" src={AdrianProfile} alt="my photo" />
-          <h2>Adrian Bakalarz</h2>
-          <p>Wrocław</p>
-        </div>
-        <div className="info">
+          <h2 style={{ marginBottom: '15px' }}>Adrian Bakalarz</h2>
+          <p style={{ marginBottom: '30px' }}>Wrocław</p>
           <p>e-mail:</p>
           <p style={{ marginBottom: '30px' }}>
             <a href="mailto:adrianbaakalarz@gmail.com">

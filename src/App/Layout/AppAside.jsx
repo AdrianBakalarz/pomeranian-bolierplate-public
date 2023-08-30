@@ -7,7 +7,6 @@ import { ElementIcon } from './../Components/Icons/ElementIcon';
 
 import { EditIcon } from './../Components/Icons/EditIcon';
 import { CalendarIcon } from './../Components/Icons/CalendarIcon';
-import { SettingIcon } from '../Components/Icons/SettingIcon';
 import { PersonalCardIcon } from '../Components/Icons/PersonalCardIcon';
 import { FaqIcon } from '../Components/Icons/FaqIcon';
 
@@ -56,13 +55,6 @@ export function AppAside() {
             <NavLink className="aside-row" to="faq">
               <FaqIcon className="menu-icon" />
               FAQ
-            </NavLink>
-          </li>
-          <hr />
-          <li>
-            <NavLink className="aside-row" to="settings">
-              <SettingIcon className="menu-icon" />
-              Ustawienia
             </NavLink>
           </li>
         </ul>
