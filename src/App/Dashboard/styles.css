@@ -12,8 +12,9 @@
 
 .dasboard-head {
   color: #fe3756;
-  display: flex;
-  flex-direction: row;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .dashboard .cards {
@@ -63,15 +64,7 @@
   margin-bottom: 0;
   color: #adadad;
 }
-.dashboard aside .profile-img img {
-  border-radius: 50%;
-  border: 4px solid #fe3756;
-}
 .dashboard aside a {
   color: #adadad;
   text-decoration: none;
-}
-
-@media(max-width: 768px) {
-  
 }

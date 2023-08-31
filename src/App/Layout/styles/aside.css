@@ -25,12 +25,13 @@ aside li {
 aside li a {
   display: block;
   padding: 0.5rem;
+  text-decoration: none;
 }
 
-aside a.active {
+/* aside a.active {
   background-color: var(--color-primary-blue);
   color: var(--color-white);
-}
+} */
 aside ul {
   padding-inline-start: 1rem;
 
@@ -38,7 +39,7 @@ aside ul {
 
   padding-left: 0;
 }
-aside li a:hover {
+/* aside li a:hover {
   background-color: var(--color-primary-blue);
   color: var(--color-white);
-}
+} */
