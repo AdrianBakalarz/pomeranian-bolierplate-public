@@ -20,7 +20,7 @@ export const Layout = ({ withSidebar }) => {
       {/* <Avatar /> */}
       <div className={getLayoutClassName(withSidebar)}>
         <AppHeader />
-        {withSidebar && <AppAside />}
+        {/* {withSidebar && <AppAside />} */}
         <main>
           <Outlet />
         </main>

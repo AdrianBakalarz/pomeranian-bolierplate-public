@@ -46,9 +46,25 @@ export const Dashboard = () => {
     <div className="dashboard">
       <header>
         <div className="dashboard-head">
-          <h3 style={{ marginLeft: '10px' }}>Hej, tu Adrian!</h3>
+          <h3
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontSize: '40px',
+            }}
+          >
+            Hej, tu Adrian!
+          </h3>
         </div>
-        <p>
+        <p
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '20px'
+          }}
+        >
           Poniżej znajdziesz najważniejsze informacje na temat mojej
           działalności
         </p>
