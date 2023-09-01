@@ -17,7 +17,7 @@ export const Layout = ({ withSidebar }) => {
   return (
     <ErrorBoundary>
       <Cookies />
-      <Avatar />
+      {/* <Avatar /> */}
       <div className={getLayoutClassName(withSidebar)}>
         <AppHeader />
         {withSidebar && <AppAside />}

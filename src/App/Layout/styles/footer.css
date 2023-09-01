@@ -21,9 +21,7 @@ footer .text-down {
   align-items: flex-end;
 }
 
-footer a{
+footer a {
  text-align: right;
- /* width: 100%; */
  display: block;
 }
-

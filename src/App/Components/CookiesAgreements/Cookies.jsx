@@ -38,7 +38,7 @@ const Cookies = () => {
           </button>
         </div>
       </div>
-      )
+     
     </>
   );
 };
